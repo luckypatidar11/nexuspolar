@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background: #071522;
+    color: #e7eef2;
+    overflow-x: hidden;
+    font-family: "DM Sans", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+:root {
+  --ink: #071522;
+  --ink-soft: #0c2235;
+  --panel: rgba(14, 39, 59, 0.88);
+  --panel-soft: rgba(18, 51, 75, 0.68);
+  --line: rgba(178, 220, 235, 0.16);
+  --cyan: #66e3e1;
+  --blue: #7cc8f4;
+  --amber: #f4b860;
+}
+
+.app-shell {
+  background:
+    radial-gradient(circle at 12% -8%, rgba(73, 194, 220, 0.18), transparent 28%),
+    radial-gradient(circle at 88% 106%, rgba(246, 197, 108, 0.1), transparent 24%),
+    linear-gradient(135deg, #071522 0%, #0a2033 48%, #081827 100%);
+}
+
+.login-shell {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(73, 194, 220, 0.18), transparent 24%),
+    radial-gradient(circle at 92% 88%, rgba(246, 197, 108, 0.1), transparent 22%),
+    #071522;
+}
+
+.login-card {
+  background: linear-gradient(145deg, rgba(16, 47, 70, 0.96), rgba(8, 27, 44, 0.98));
+}
+
+/* The light operational canvas keeps the dense route components readable. */
+.light-theme {
+  color: #17324a;
+}
+
+.light-theme.app-shell,
+.light-theme.login-shell {
+  background:
+    radial-gradient(circle at 12% -8%, rgba(93, 190, 218, 0.18), transparent 28%),
+    radial-gradient(circle at 88% 106%, rgba(246, 197, 108, 0.12), transparent 24%),
+    linear-gradient(135deg, #f8fcfd 0%, #eef7fa 52%, #e5f1f5 100%);
+}
+
+.light-theme .workspace-viewport {
+  background: rgba(241, 248, 251, 0.78);
+  border-color: #d6e5ec;
+}
+
+.light-theme .frost-panel,
+.light-theme .frost-panel-interactive {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 250, 0.96));
+  border-color: #d2e2e9;
+  box-shadow: 0 12px 28px -20px rgba(28, 73, 99, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.light-theme .frost-panel-subtle {
+  background: rgba(231, 242, 247, 0.8);
+  border-color: #cbdfe7;
+}
+
+.light-theme .text-white,
+.light-theme .text-slate-100,
+.light-theme .text-slate-200,
+.light-theme .text-polar-950 {
+  color: #17324a !important;
+}
+
+.light-theme .text-slate-300,
+.light-theme .text-slate-400 {
+  color: #587183 !important;
+}
+
+.light-theme .text-slate-500 {
+  color: #78909d !important;
+}
+
+.light-theme .text-cyan-200,
+.light-theme .text-cyan-300,
+.light-theme .text-cyan-400,
+.light-theme .text-sky-300,
+.light-theme .text-sky-400,
+.light-theme .text-blue-300,
+.light-theme .text-blue-400,
+.light-theme .text-polar-300,
+.light-theme .text-polar-400 {
+  color: #086d91 !important;
+}
+
+.light-theme .text-emerald-300,
+.light-theme .text-emerald-400 {
+  color: #087a62 !important;
+}
+
+.light-theme .text-amber-300,
+.light-theme .text-amber-400 {
+  color: #a45b08 !important;
+}
+
+.light-theme [class*="bg-slate-950"],
+.light-theme [class*="bg-slate-900"],
+.light-theme [class*="bg-slate-800"],
+.light-theme [class*="bg-polar-950"],
+.light-theme [class*="bg-polar-900"],
+.light-theme [class*="bg-polar-850"],
+.light-theme [class*="bg-polar-800"] {
+  background-color: rgba(235, 245, 249, 0.9) !important;
+}
+
+.light-theme [class*="border-white"],
+.light-theme [class*="border-polar-800"],
+.light-theme [class*="border-polar-700"] {
+  border-color: #cddfe7 !important;
+}
+
+.light-theme select,
+.light-theme input,
+.light-theme textarea {
+  color: #17324a;
+  background-color: #ffffff;
+  border-color: #a9c4d0;
+}
+
+.light-theme select option {
+  background: #ffffff;
+  color: #17324a;
+}
+
+.light-theme .login-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 250, 0.98));
+  border-color: #c4dce6;
+  box-shadow: 0 25px 60px rgba(33, 76, 99, 0.16);
+}
+
+.light-theme .login-card input {
+  background: #f4f9fb !important;
+  border-color: #c4d9e2;
+  color: #17324a;
+}
+
+.workspace-viewport {
+  background: rgba(5, 15, 22, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* Keep route views information-dense without making every card feel crowded. */
+.workspace-compact .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem;
+}
+
+.workspace-compact .space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.875rem;
+}
+
+.workspace-compact .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem;
+}
+
+.workspace-compact .gap-6 {
+  gap: 1rem;
+}
+
+.workspace-compact .gap-5 {
+  gap: 0.875rem;
+}
+
+.workspace-compact .frost-panel.p-5 {
+  padding: 1rem;
+}
+
+.workspace-compact .frost-panel.p-6 {
+  padding: 1.125rem;
+}
+
+.workspace-compact h1.text-2xl {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+@layer utilities {
+  .soft-shadow {
+    box-shadow: 0 20px 45px rgba(2, 6, 23, 0.28);
+  }
+}
+
+/* Polar radar scan animation */
+@keyframes polar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes ping-slow {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 0.2; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.animate-radar {
+  animation: polar-sweep 7s linear infinite;
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Glassmorphic Frost Card */
+.frost-panel {
+  background: linear-gradient(145deg, rgba(16, 47, 70, 0.9), rgba(8, 27, 44, 0.88));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 38px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.frost-panel-subtle {
+  background: var(--panel-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(156, 189, 199, 0.1);
+}
+
+.frost-panel-interactive {
+  background: linear-gradient(145deg, rgba(16, 47, 70, 0.9), rgba(8, 27, 44, 0.88));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 25px rgba(2, 6, 23, 0.35);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.frost-panel-interactive:hover {
+  border-color: rgba(102, 227, 225, 0.38);
+  box-shadow: 0 16px 32px rgba(42, 166, 175, 0.14);
+  transform: translateY(-2px);
+}
+
+.frost-glow-cyan {
+  box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.25);
+}
+
+/* Custom Polar Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(4, 13, 19, 0.7);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(111, 151, 161, 0.42);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 227, 225, 0.62);
+}
