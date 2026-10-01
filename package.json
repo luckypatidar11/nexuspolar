@@ -2,9 +2,16 @@
   "name": "nexuspole-root",
   "version": "1.0.0",
   "description": "NexusPole - Polar Expedition Logistics & Asset Management System (SIH 26062)",
+  "homepage": "https://<your-github-username>.github.io/<your-repo-name>",
   "scripts": {
     "install:all": "cd server && npm install && cd ../client && npm install",
     "server": "cd server && npm run dev",
-    "client": "cd client && npm run dev"
+    "client": "cd client && npm run dev",
+    "predeploy": "cd client && npm run build",
+    "deploy": "gh-pages -d client/dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
+
