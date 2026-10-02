@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
-  const backendUrl = process.env.RENDER_API_URL?.replace(/\/+$/, '');
+  const backendUrl = (process.env.client_key_ || process.env.RENDER_API_URL)?.replace(/\/+$/, '');
   if (!backendUrl) {
-    return res.status(500).json({ error: 'RENDER_API_URL is not configured' });
+    return res.status(500).json({ error: 'Set client_key_ to the Render service URL' });
   }
 
   const path = Array.isArray(req.query.path)
