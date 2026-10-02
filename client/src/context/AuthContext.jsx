@@ -13,16 +13,6 @@ const DEMO_USERS = [
 ];
 const DEMO_PASSWORD = 'demo123';
 
-const getSavedUser = () => {
-  try {
-    const saved = JSON.parse(localStorage.getItem('nexuspole_user'));
-    return DEMO_USERS.find(user => user.id === saved?.id) || null;
-  } catch {
-    localStorage.removeItem('nexuspole_user');
-    return null;
-  }
-};
-
 export const ROLE_PERMISSIONS = {
   'Mission Commander': ['overview', 'weather', 'mission', 'geofence', 'planner', 'whatif', 'cargo', 'inventory', 'shipments', 'assets', 'personnel', 'emergency', 'risk', 'voice', 'reports', 'sync'],
   'System Administrator': ['overview', 'weather', 'mission', 'geofence', 'planner', 'whatif', 'cargo', 'inventory', 'shipments', 'assets', 'personnel', 'emergency', 'risk', 'voice', 'reports', 'sync'],
@@ -34,7 +24,7 @@ export const ROLE_PERMISSIONS = {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(getSavedUser);
+  const [currentUser, setCurrentUser] = useState(null);
   const availableRoles = DEMO_USERS;
 
   const signIn = (email, password) => {
@@ -43,21 +33,16 @@ export const AuthProvider = ({ children }) => {
       throw new Error('Check the demo email and password, then try again.');
     }
     setCurrentUser(user);
-    localStorage.setItem('nexuspole_user', JSON.stringify(user));
-    localStorage.removeItem('nexuspole_token');
   };
 
   const signOut = () => {
     setCurrentUser(null);
-    localStorage.removeItem('nexuspole_user');
-    localStorage.removeItem('nexuspole_token');
   };
 
   const switchRole = (roleName) => {
     const found = DEMO_USERS.find(user => user.role === roleName);
     if (found) {
       setCurrentUser(found);
-      localStorage.setItem('nexuspole_user', JSON.stringify(found));
     }
   };
 
