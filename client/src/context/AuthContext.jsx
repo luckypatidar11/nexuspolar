@@ -1,6 +1,27 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
+
+const DEMO_USERS = [
+  { id: 'usr-01', email: 'commander@nexuspole.gov.in', name: 'Dr. Rajesh Sharma', role: 'Mission Commander', stationId: 'ST-BHARATI' },
+  { id: 'usr-02', email: 'logistics@nexuspole.gov.in', name: 'Lt. Col. Vikrant Nair', role: 'Logistics Officer', stationId: 'ST-BHARATI' },
+  { id: 'usr-03', email: 'asset@nexuspole.gov.in', name: 'Priya Sen', role: 'Asset Manager', stationId: 'ST-BHARATI' },
+  { id: 'usr-04', email: 'medical@nexuspole.gov.in', name: 'Dr. Ananya Mukherjee', role: 'Medical/Safety Officer', stationId: 'ST-MAITRI' },
+  { id: 'usr-05', email: 'researcher@nexuspole.gov.in', name: 'Dr. Kabir Das', role: 'Scientist/Researcher', stationId: 'ST-BHARATI' },
+  { id: 'usr-06', email: 'field@nexuspole.gov.in', name: 'Tarun Rawat', role: 'Field Personnel', stationId: 'ST-BHARATI' },
+  { id: 'usr-07', email: 'admin@nexuspole.gov.in', name: 'System Administrator', role: 'System Administrator', stationId: 'HQ-GOA' }
+];
+const DEMO_PASSWORD = 'demo123';
+
+const getSavedUser = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem('nexuspole_user'));
+    return DEMO_USERS.find(user => user.id === saved?.id) || null;
+  } catch {
+    localStorage.removeItem('nexuspole_user');
+    return null;
+  }
+};
 
 export const ROLE_PERMISSIONS = {
   'Mission Commander': ['overview', 'weather', 'mission', 'geofence', 'planner', 'whatif', 'cargo', 'inventory', 'shipments', 'assets', 'personnel', 'emergency', 'risk', 'voice', 'reports', 'sync'],
@@ -13,47 +34,17 @@ export const ROLE_PERMISSIONS = {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('nexuspole_user');
-    try {
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      localStorage.removeItem('nexuspole_user');
-      return null;
+  const [currentUser, setCurrentUser] = useState(getSavedUser);
+  const availableRoles = DEMO_USERS;
+
+  const signIn = (email, password) => {
+    const user = DEMO_USERS.find(profile => profile.email === email);
+    if (!user || password !== DEMO_PASSWORD) {
+      throw new Error('Check the demo email and password, then try again.');
     }
-  });
-
-  const [availableRoles, setAvailableRoles] = useState([]);
-
-  useEffect(() => {
-    fetch('/api/auth/roles')
-      .then(res => res.json())
-      .then(data => setAvailableRoles(data))
-      .catch(() => {
-        // Fallback default roles if backend is initializing
-        setAvailableRoles([
-          { id: "usr-01", name: "Dr. Rajesh Sharma", role: "Mission Commander", stationId: "ST-BHARATI" },
-          { id: "usr-02", name: "Lt. Col. Vikrant Nair", role: "Logistics Officer", stationId: "ST-BHARATI" },
-          { id: "usr-03", name: "Priya Sen", role: "Asset Manager", stationId: "ST-BHARATI" },
-          { id: "usr-04", name: "Dr. Ananya Mukherjee", role: "Medical/Safety Officer", stationId: "ST-MAITRI" },
-          { id: "usr-05", name: "Dr. Kabir Das", role: "Scientist/Researcher", stationId: "ST-BHARATI" },
-          { id: "usr-06", name: "Tarun Rawat", role: "Field Personnel", stationId: "ST-BHARATI" },
-          { id: "usr-07", name: "System Administrator", role: "System Administrator", stationId: "HQ-GOA" }
-        ]);
-      });
-  }, []);
-
-  const signIn = async (email, password) => {
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || 'Unable to sign in');
-    setCurrentUser(data.user);
-    localStorage.setItem('nexuspole_user', JSON.stringify(data.user));
-    localStorage.setItem('nexuspole_token', data.token);
+    setCurrentUser(user);
+    localStorage.setItem('nexuspole_user', JSON.stringify(user));
+    localStorage.removeItem('nexuspole_token');
   };
 
   const signOut = () => {
@@ -63,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const switchRole = (roleName) => {
-    const found = availableRoles.find(r => r.role === roleName);
+    const found = DEMO_USERS.find(user => user.role === roleName);
     if (found) {
       setCurrentUser(found);
       localStorage.setItem('nexuspole_user', JSON.stringify(found));
