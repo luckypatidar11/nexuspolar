@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { useOffline } from '../context/OfflineContext';
 import { 
   Boxes, 
@@ -41,7 +42,7 @@ export default function InventoryManager() {
 
   const loadInventory = async () => {
     try {
-      const res = await fetch('/api/inventory');
+      const res = await apiFetch('/api/inventory');
       const data = await res.json();
       setInventoryList(data);
     } catch (err) {
@@ -88,7 +89,7 @@ export default function InventoryManager() {
     }
 
     try {
-      const res = await fetch('/api/inventory/transaction', {
+      const res = await apiFetch('/api/inventory/transaction', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -134,7 +135,7 @@ export default function InventoryManager() {
     event.preventDefault();
     if (!dispatchModal || !canDispatch || isOffline) return;
     try {
-      const response = await fetch('/api/inventory/dispatch', {
+      const response = await apiFetch('/api/inventory/dispatch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

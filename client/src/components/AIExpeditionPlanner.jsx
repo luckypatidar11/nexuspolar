@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { 
   Sparkles, 
   CheckCircle, 
@@ -37,7 +38,7 @@ export default function AIExpeditionPlanner({ onExpeditionCreated }) {
     setLoading(true);
     setApprovalStatus(null);
     try {
-      const res = await fetch('/api/planner/calculate', {
+      const res = await apiFetch('/api/planner/calculate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -67,7 +68,7 @@ export default function AIExpeditionPlanner({ onExpeditionCreated }) {
     if (!planResult) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/planner/approve', {
+      const res = await apiFetch('/api/planner/approve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

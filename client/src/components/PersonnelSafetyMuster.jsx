@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { useOffline } from '../context/OfflineContext';
 import { 
   Users, 
@@ -23,7 +24,7 @@ export default function PersonnelSafetyMuster() {
 
   const loadPersonnel = async () => {
     try {
-      const res = await fetch('/api/auth/roles');
+      const res = await apiFetch('/api/auth/roles');
       const data = await res.json();
       setUsers(data);
     } catch (err) {

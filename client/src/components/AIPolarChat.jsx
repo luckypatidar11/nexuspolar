@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiFetch } from '../api';
 import { Bot, Send, ShieldAlert, Sparkles, UserRound } from 'lucide-react';
 
 export default function AIPolarChat({ stations, selectedStation }) {
@@ -15,7 +16,7 @@ export default function AIPolarChat({ stations, selectedStation }) {
     setMessages(previous => [...previous, { role: 'user', text: question }]);
     setLoading(true);
     try {
-      const response = await fetch('/api/ai/chat', {
+      const response = await apiFetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: question, context: { stationId: station.id, station: station.name, weather: station.weather } })

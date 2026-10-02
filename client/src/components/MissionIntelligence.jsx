@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { apiFetch } from '../api';
 import {
   Activity,
   AlertTriangle,
@@ -36,7 +37,7 @@ export default function MissionIntelligence({ expeditions, assets, incidents }) 
   const selectedMission = expeditions.find(expedition => expedition.id === selectedId) || expeditions[0] || {};
 
   useEffect(() => {
-    fetch('/api/inventory').then(response => response.json()).then(data => setInventory(Array.isArray(data) ? data : [])).catch(() => setInventory([]));
+    apiFetch('/api/inventory').then(response => response.json()).then(data => setInventory(Array.isArray(data) ? data : [])).catch(() => setInventory([]));
   }, []);
 
   const readiness = useMemo(() => calculateReadiness(selectedMission, inventory, assets, incidents), [selectedMission, inventory, assets, incidents]);
@@ -49,7 +50,7 @@ export default function MissionIntelligence({ expeditions, assets, incidents }) 
     setReplanResult(null);
     try {
       const allocation = selectedMission.resourceAllocation || {};
-      const response = await fetch('/api/planner/calculate', {
+      const response = await apiFetch('/api/planner/calculate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { 
   Truck, 
   Wrench, 
@@ -24,7 +25,7 @@ export default function AssetPredictiveManager() {
 
   const loadAssets = async () => {
     try {
-      const res = await fetch('/api/assets');
+      const res = await apiFetch('/api/assets');
       const data = await res.json();
       setAssets(data);
       if (!selectedAsset && data.length > 0) {
@@ -44,7 +45,7 @@ export default function AssetPredictiveManager() {
     if (!serviceModal) return;
 
     try {
-      const res = await fetch(`/api/assets/${serviceModal.id}/maintenance`, {
+      const res = await apiFetch(`/api/assets/${serviceModal.id}/maintenance`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { apiFetch } from '../api';
 import {
   AlertTriangle,
   CloudSun,
@@ -37,7 +38,7 @@ export default function WeatherIntelligence({ stations, selectedStation, onSelec
     const loadLiveWeather = async () => {
       setWeatherStatus('loading');
       try {
-        const response = await fetch(`/api/weather/live/${activeStation.id}`);
+        const response = await apiFetch(`/api/weather/live/${activeStation.id}`);
         const data = await response.json();
         if (!cancelled && response.ok && data.weather) {
           setLiveWeather(data.weather);

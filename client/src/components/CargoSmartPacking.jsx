@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { QRCodeCanvas } from 'qrcode.react';
 import { 
   Package, 
@@ -36,7 +37,7 @@ export default function CargoSmartPacking() {
 
   const loadCargo = async () => {
     try {
-      const res = await fetch('/api/cargo');
+      const res = await apiFetch('/api/cargo');
       const data = await res.json();
       setCargoList(data);
     } catch (err) {
@@ -46,7 +47,7 @@ export default function CargoSmartPacking() {
 
   const loadOptimization = async () => {
     try {
-      const res = await fetch('/api/cargo/pack-optimize', { method: 'POST' });
+      const res = await apiFetch('/api/cargo/pack-optimize', { method: 'POST' });
       const data = await res.json();
       setOptimization(data);
     } catch (err) {
@@ -62,7 +63,7 @@ export default function CargoSmartPacking() {
   const handleCreateCargo = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/cargo', {
+      const res = await apiFetch('/api/cargo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCargo)

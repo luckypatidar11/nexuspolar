@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from './api';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/AuthContext';
 import { OfflineProvider, useOffline } from './context/OfflineContext';
@@ -43,13 +44,13 @@ function DashboardLayout() {
   const loadData = async () => {
     try {
       const [stRes, expRes, astRes, incRes, rskRes, cargoRes, invRes] = await Promise.all([
-        fetch('/api/stations').then(r => r.json()).catch(() => []),
-        fetch('/api/expeditions').then(r => r.json()).catch(() => []),
-        fetch('/api/assets').then(r => r.json()).catch(() => []),
-        fetch('/api/incidents').then(r => r.json()).catch(() => []),
-        fetch('/api/risk-alerts').then(r => r.json()).catch(() => []),
-        fetch('/api/cargo').then(r => r.json()).catch(() => []),
-        fetch('/api/inventory').then(r => r.json()).catch(() => [])
+        apiFetch('/api/stations').then(r => r.json()).catch(() => []),
+        apiFetch('/api/expeditions').then(r => r.json()).catch(() => []),
+        apiFetch('/api/assets').then(r => r.json()).catch(() => []),
+        apiFetch('/api/incidents').then(r => r.json()).catch(() => []),
+        apiFetch('/api/risk-alerts').then(r => r.json()).catch(() => []),
+        apiFetch('/api/cargo').then(r => r.json()).catch(() => []),
+        apiFetch('/api/inventory').then(r => r.json()).catch(() => [])
       ]);
 
       if (Array.isArray(stRes) && stRes.length > 0) setStations(stRes);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { 
   FileText, 
   Download, 
@@ -20,7 +21,7 @@ export default function AutomatedReports() {
   const fetchReport = async (type) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/reports/${type}`);
+      const res = await apiFetch(`/api/reports/${type}`);
       const data = await res.json();
       setReportData(data);
     } catch (err) {

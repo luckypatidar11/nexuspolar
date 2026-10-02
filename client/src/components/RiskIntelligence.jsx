@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { 
   Flame, 
   AlertTriangle, 
@@ -22,10 +23,10 @@ export default function RiskIntelligence() {
   const loadAlerts = async () => {
     try {
       const [riskRes, inventoryRes, cargoRes, assetsRes] = await Promise.all([
-        fetch('/api/risk-alerts'),
-        fetch('/api/inventory'),
-        fetch('/api/cargo'),
-        fetch('/api/assets')
+        apiFetch('/api/risk-alerts'),
+        apiFetch('/api/inventory'),
+        apiFetch('/api/cargo'),
+        apiFetch('/api/assets')
       ]);
       const [riskData, inventoryData, cargoData, assetsData] = await Promise.all([
         riskRes.json(), inventoryRes.json(), cargoRes.json(), assetsRes.json()

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 
 const OfflineContext = createContext();
 
@@ -44,7 +45,7 @@ export const OfflineProvider = ({ children }) => {
 
     setIsSyncing(true);
     try {
-      const response = await fetch('/api/sync/batch', {
+      const response = await apiFetch('/api/sync/batch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

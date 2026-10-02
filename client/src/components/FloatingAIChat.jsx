@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiFetch } from '../api';
 import { Bot, Send, ShieldAlert, X } from 'lucide-react';
 
 export default function FloatingAIChat({ station }) {
@@ -17,7 +18,7 @@ export default function FloatingAIChat({ station }) {
     setMessages(previous => [...previous, { role: 'user', text: question }]);
     setLoading(true);
     try {
-      const response = await fetch('/api/ai/chat', {
+      const response = await apiFetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

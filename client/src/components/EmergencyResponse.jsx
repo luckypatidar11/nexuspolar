@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { 
   AlertOctagon, 
   AlertTriangle, 
@@ -26,7 +27,7 @@ export default function EmergencyResponse({ selectedStation = "ST-BHARATI" }) {
 
   const loadIncidents = async () => {
     try {
-      const res = await fetch('/api/incidents');
+      const res = await apiFetch('/api/incidents');
       const data = await res.json();
       setIncidents(data);
       if (!activeIncident && data.length > 0) {
@@ -59,7 +60,7 @@ export default function EmergencyResponse({ selectedStation = "ST-BHARATI" }) {
   const handleToggleChecklist = async (stepId, currentState) => {
     if (!activeIncident) return;
     try {
-      const res = await fetch(`/api/incidents/${activeIncident.id}`, {
+      const res = await apiFetch(`/api/incidents/${activeIncident.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -80,7 +81,7 @@ export default function EmergencyResponse({ selectedStation = "ST-BHARATI" }) {
   const handleStatusChange = async (newStatus) => {
     if (!activeIncident) return;
     try {
-      const res = await fetch(`/api/incidents/${activeIncident.id}`, {
+      const res = await apiFetch(`/api/incidents/${activeIncident.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -101,7 +102,7 @@ export default function EmergencyResponse({ selectedStation = "ST-BHARATI" }) {
     e.preventDefault();
     if (!timelineNote.trim() || !activeIncident) return;
     try {
-      const res = await fetch(`/api/incidents/${activeIncident.id}`, {
+      const res = await apiFetch(`/api/incidents/${activeIncident.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -121,7 +122,7 @@ export default function EmergencyResponse({ selectedStation = "ST-BHARATI" }) {
   const handleDeclareIncident = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/incidents', {
+      const res = await apiFetch('/api/incidents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

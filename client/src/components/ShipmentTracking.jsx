@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { apiFetch } from '../api';
 import {
   Anchor,
   CheckCircle2,
@@ -33,7 +34,7 @@ export default function ShipmentTracking() {
   const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
-    const loadCargo = () => fetch('/api/cargo')
+    const loadCargo = () => apiFetch('/api/cargo')
       .then(response => response.json())
       .then(data => {
         setCargo(Array.isArray(data) ? data : []);

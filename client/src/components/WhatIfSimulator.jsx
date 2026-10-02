@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import { 
   Sliders, 
   AlertTriangle, 
@@ -29,7 +30,7 @@ export default function WhatIfSimulator({ selectedStation = "ST-BHARATI", statio
   const runSimulation = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/simulation/run', {
+      const res = await apiFetch('/api/simulation/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
